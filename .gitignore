@@ -12,5 +12,3 @@ Release/
 # ejecutables Windows
 *.exe
 
-# configs locales (no subir)
-cliente/config.txt
