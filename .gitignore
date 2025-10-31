@@ -1,6 +1,16 @@
+# carpetas de compilación (cliente y servidor)
 obj/
 bin/
+Debug/
+Release/
+
+# Code::Blocks / proyectos locales
 *.cbp
-trabajoV1.depend
-trabajoV1.layout
+*.depend
+*.layout
+
+# ejecutables Windows
+*.exe
+
+# configs locales (no subir)
 cliente/config.txt
