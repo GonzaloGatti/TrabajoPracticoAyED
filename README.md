@@ -1,2 +1,2 @@
 # TrabajoPracticoAyED
-Repositorio del trabajo practico "Laberintos y Fantasmas", Algotirmos y estructuras de datos
+Repositorio del trabajo practico "Laberintos y Fantasmas", Algoritmos y estructuras de datos
