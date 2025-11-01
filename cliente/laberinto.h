@@ -1,11 +1,9 @@
 #ifndef LABERINTO_H_INCLUDED
 #define LABERINTO_H_INCLUDED
 
-#include "cola.h"
+#include "common.h"
 
-#define EXITO 0
-#define ERROR_ARCHIVO 1
-#define DERROTA 2
+#include "cola.h"
 
 // ----------- Estructuras --------------
 typedef struct {
@@ -23,6 +21,7 @@ typedef struct {
     int id;
     char proxMov;
 } MovFantasma;
+
 
 // ----------- Funciones --------------
 int laberinto();

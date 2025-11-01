@@ -1,8 +1,11 @@
 #include "menu.h"
-
+#include "client_lib.h"
 
 void menuJuego(){
-    char op, nombreUsuario[LARGO_NOMBRE_USUARIO];
+    tPartida datos;
+    int resultado;
+    char response[BUFFER_SIZE];
+    char op;
     const char opciones [][LARGO_MENU] = {
                                           "ABC",
                                           "Ver ranking de jugadores",
@@ -10,7 +13,16 @@ void menuJuego(){
                                           "Salir del juego"
                                         };
 
+    if (init_winsock() != 0)
+        printf("Error al inicializar Winsock\n");
 
+    SOCKET sock = connect_to_server(SERVER_IP, PORT);
+    if (sock == INVALID_SOCKET) {
+        printf("No se pudo conectar al servidor\n");
+        WSACleanup();
+    }
+
+    printf("Conectado al servidor.\n");
     do{
 
         op=menu(opciones, "Juego - Laberintos y Fantasmas\n \t\tMenu Principal");
@@ -24,15 +36,29 @@ void menuJuego(){
             case 'B':
                 system("cls");
                 printf("\n Ingrese su nombre de usuario: ");
-                scanf("%s", nombreUsuario);
+                scanf("%s", datos.nombre);
                 system("cls");
 
-                laberinto();
+                resultado = laberinto(&datos);
+
+                system("cls");
+                if (send_request(sock, &datos, response) == 0 && !resultado) {
+                    printf("Respuesta: %s\n", response);
+                } else {
+                    printf("Error al enviar o recibir datos\n");
+                    break;
+                }
+
+                system("pause");
+                break;
+
+            case 'C':
                 break;
         }
 
     } while(op != 'C');
 
+     close_connection(sock);
  }
 
 char menu(const char menu[][LARGO_MENU], const char* titulo){

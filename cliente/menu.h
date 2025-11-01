@@ -1,10 +1,10 @@
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
 
-#include "laberinto.h"
+#include "common.h"
 
-#define LARGO_MENU 30
-#define LARGO_NOMBRE_USUARIO 30
+#include "laberinto.h"
+#include "client_lib.h"
 
 void menuJuego();
 char menu(const char[][LARGO_MENU], const char*);

@@ -1,6 +1,6 @@
 #include "laberinto.h"
 
-int laberinto()
+int laberinto(tPartida *datos)
 {
     // VARIABLES
     int filas, cols, vidasInicio, cantFantasmas, cantPremios, cantVidasExtra, puntos = 0, ni, nj, fi, fj, contadorMovs = 0;
@@ -16,7 +16,8 @@ int laberinto()
     // LECTURA DE LOS DATOS DEL ARCHIVOS DE TEXTO PARA LA CREACION DEL LABERINTO
     if(leerDatosDeArchivo(&filas ,&cols , &vidasInicio, &cantFantasmas, &cantPremios, &cantVidasExtra) == ERROR_ARCHIVO)
     {
-        printf("Error al leer archivo de texto");
+        printf("Error al leer archivo de texto\n");
+        system("pause");
         return ERROR_ARCHIVO;
     }
     // =============
@@ -118,8 +119,10 @@ int laberinto()
                     printf("-");
             }
 
-
             printf("\nTotal de movimientos: %d", contadorMovs);
+
+            datos->cantidadMovimientos = contadorMovs;
+            datos->cantidadPuntos = puntos;
             /*
             printf("\nHistorial de movimientos de los fantasmas:\n");
             while(sacarDeCola(&colaMovsFantasmas, &m, sizeof(m)) ==  EXITO) {
@@ -130,7 +133,7 @@ int laberinto()
             printf("\n\n\n");
             system("pause");
 
-            return DERROTA;
+            return EXITO;
         }
         //=============
 
@@ -329,7 +332,7 @@ int laberinto()
     free(lab);
     // =============
 
-    return EXITO;
+    return DERROTA;
 }
 
 int leerDatosDeArchivo(int *filas, int *cols, int *vidasInicio, int *cantFantasmas, int *cantPremios, int *cantVidasExtra)
