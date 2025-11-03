@@ -24,8 +24,8 @@ SOCKET connect_to_server(const char *server_ip, int port) {
     return sock;
 }
 
-int send_request(SOCKET sock, tPartida *datos, char *response) {
-    if (send(sock, (const char *)datos, sizeof(tPartida), 0) < 0) {
+int send_request(SOCKET sock, tPartidaCli *datos, char *response) {
+    if (send(sock, (const char *)datos, sizeof(tPartidaCli), 0) < 0) {
         return -1;
     }
 
@@ -38,7 +38,7 @@ int send_request(SOCKET sock, tPartida *datos, char *response) {
         return -1;
 
     response[bytes_received] = '\0';
-    return 0;
+    return EXITO;
 }
 
 void close_connection(SOCKET sock) {

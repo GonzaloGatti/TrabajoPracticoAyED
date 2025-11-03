@@ -19,12 +19,29 @@
 #define PORT 12345
 #define BUFFER_SIZE 1024
 
+#define TamRanking (4 + 4 + LARGO_NOMBRE_USUARIO)
+
 #define MIN(a, b) ((a)<(b)?(a):(b))
 
 typedef struct{
+    char opcion;
     char nombre[LARGO_NOMBRE_USUARIO];
     int cantidadPuntos;
     int cantidadMovimientos;
-} tPartida;
+} tPartidaCli;
+
+typedef struct{
+    int idJugador;
+    char nombre[LARGO_NOMBRE_USUARIO];
+    int cantidadPuntos;
+    int cantidadMovimientos;
+    int cantidadPartidas;
+} tPartidaSrv;
+
+typedef struct{
+    int idJugador;
+    char nombre[LARGO_NOMBRE_USUARIO];
+    int totalPuntos;
+} tRanking;
 
 #endif // COMMON_H_INCLUDED

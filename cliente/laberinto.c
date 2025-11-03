@@ -1,6 +1,6 @@
 #include "laberinto.h"
 
-int laberinto(tPartida *datos)
+int laberinto(tPartidaCli *datos)
 {
     // VARIABLES
     int filas, cols, vidasInicio, cantFantasmas, cantPremios, cantVidasExtra, puntos = 0, ni, nj, fi, fj, contadorMovs = 0;
@@ -25,10 +25,10 @@ int laberinto(tPartida *datos)
     srand(time(NULL));
 
     // CREACION DEL LABERINTO Y POSICIONAMIENTO DE ENTRADA, SALIDA Y JUGADOR
-    lab = creacionYPosicionamientoLab(&E, &S, &J, filas, cols);
-    if(!lab)
+    if(!(lab = creacionYPosicionamientoLab(&E, &S, &J, filas, cols)))
     {
-        printf("Error al tomar memoria para el laberinto");
+        printf("Error al crear laberinto\n");
+        system("pause");
         return ERROR_TOMAR_MEMORIA;
     }
     // =============
@@ -332,7 +332,7 @@ int laberinto(tPartida *datos)
     free(lab);
     // =============
 
-    return DERROTA;
+    return EXITO;
 }
 
 int leerDatosDeArchivo(int *filas, int *cols, int *vidasInicio, int *cantFantasmas, int *cantPremios, int *cantVidasExtra)
@@ -360,6 +360,8 @@ char ** creacionYPosicionamientoLab(Pos *E, Pos *S, Pos *J, int filas, int cols)
     if(!lab)
         return NULL;
 
+    if(filas <= 0 || cols <= 0)
+        return NULL;
 
     for(int i=0;i<filas;i++)
     {

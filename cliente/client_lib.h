@@ -12,7 +12,7 @@ int init_winsock();
 SOCKET connect_to_server(const char *server_ip, int port);
 
 // Envía una solicitud y recibe la respuesta
-int send_request(SOCKET sock, tPartida *, char *response);
+int send_request(SOCKET sock, tPartidaCli *, char *response);
 
 // Cierra la conexión y limpia Winsock
 void close_connection(SOCKET sock);

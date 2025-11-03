@@ -1,6 +1,6 @@
-filas: 30
-columnas: 30
+filas: 15
+columnas: 15
 vidas_inicio: 3
-maximo_numero_fantasmas: 15
-maximo_numero_premios: 1
-maximo_vidas_extra: 1
+maximo_numero_fantasmas: 3
+maximo_numero_premios: 5
+maximo_vidas_extra: 3
