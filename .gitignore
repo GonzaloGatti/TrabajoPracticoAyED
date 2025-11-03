@@ -12,3 +12,6 @@ Release/
 # ejecutables Windows
 *.exe
 
+# Binarios
+*.dat
+
