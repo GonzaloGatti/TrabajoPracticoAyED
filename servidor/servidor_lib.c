@@ -382,7 +382,7 @@ int enviarRanking(SOCKET cli, tLista *lista)
         return EXITO;
 
     // 2) armar buffer plano y enviar de una
-    int bytes = n * TamRanking;               // TamRanking = 4(id)+4(pts)+TamNombre
+    int bytes = n * TAM_RANKING;
     char *buf = (char*)malloc(bytes);
     if (!buf) return ERROR_TOMAR_MEMORIA;
 
@@ -393,14 +393,13 @@ int enviarRanking(SOCKET cli, tLista *lista)
         uint32_t id_n  = htonl((uint32_t)r->idJugador);
         uint32_t pts_n = htonl((uint32_t)r->totalPuntos);
 
-        int off = i * TamRanking;
+        int off = i * TAM_RANKING;
         memcpy(buf + off, &id_n,  4); off += 4;
         memcpy(buf + off, &pts_n, 4); off += 4;
 
-        // nombre fijo TamNombre bytes
-        memset(buf + off, 0, TamNombre);
-        strncpy(buf + off, r->nombre, TamNombre - 1);
-        // off += TamNombre; // no lo necesitás después
+        // nombre fijo TAM_NOMBRE bytes
+        memset(buf + off, 0, TAM_NOMBRE);
+        strncpy(buf + off, r->nombre, TAM_NOMBRE - 1);
     }
 
     int st = send_all(cli, buf, bytes);

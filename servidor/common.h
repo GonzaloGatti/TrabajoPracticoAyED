@@ -27,8 +27,8 @@
 #define PORT 12345
 #define BUFFER_SIZE 2048
 
-#define TamNombre 20
-#define TamRanking (4 + 4 + TamNombre)
+#define TAM_NOMBRE 20
+#define TAM_RANKING (4 + 4 + TAM_NOMBRE)
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a, b) ((a)<(b)?(a):(b))
@@ -36,14 +36,14 @@
 
 typedef struct{
     char opcion;
-    char nombre[TamNombre];
+    char nombre[TAM_NOMBRE];
     int cantidadPuntos;
     int cantidadMovimientos;
 } tPartidaCli;
 
 typedef struct{
     int idJugador;
-    char nombre[TamNombre];
+    char nombre[TAM_NOMBRE];
     int cantidadPuntos;
     int cantidadMovimientos;
     int cantidadPartidas;
@@ -51,13 +51,13 @@ typedef struct{
 
 typedef struct{
     int idJugador;
-    char nombre[TamNombre];
+    char nombre[TAM_NOMBRE];
     int cantidadPartidas;
 } tJugador;
 
 typedef struct{
     int idJugador;
-    char nombre[TamNombre];
+    char nombre[TAM_NOMBRE];
     int totalPuntos;
 } tRanking;
 

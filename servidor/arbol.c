@@ -36,6 +36,17 @@ int insertarArbolR(tArbol *arbol, void *info, unsigned tamInfo, int cmp(void*, v
     return EXITO;
 }
 
+void recorrerArbolInOrdenR(tArbol *arbol, void accion(void *, unsigned, void *), void *param)
+{
+
+    if(!*arbol) // --> Caso base
+        return;
+
+    recorrerArbolInOrdenR(&((*arbol)->izq), accion, param);
+    accion((*arbol)->info, (*arbol)->tamInfo, param);
+    recorrerArbolInOrdenR(&((*arbol)->der), accion, param);
+}
+
 int cargarArbolDeBinDesord(tArbol *arbol, char *nombreArchivo, unsigned tamInfo, int cmpClave(void *, void *), tExtraer extraerDatos){
     tIndice indice;
     FILE *archivo;

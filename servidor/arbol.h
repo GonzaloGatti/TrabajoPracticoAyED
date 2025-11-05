@@ -23,6 +23,7 @@ typedef void(*tExtraer)(void *, void *);
 
 void crearArbol(tArbol *);
 int insertarArbolR(tArbol *, void *, unsigned, int(void*, void*));
+void recorrerArbolInOrdenR(tArbol *, void (void *, unsigned, void *), void *);
 int cargarArbolDeBinDesord(tArbol *, char *, unsigned, int(void *, void *), tExtraer);
 int crearArchIndiceDeArbol(tArbol *, char *, tExtraer);
 void _insertarRegistroEnArchivoIndice(void *, unsigned, void *);
