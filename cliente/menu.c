@@ -105,58 +105,6 @@ char opcion(const char menu[][LARGO_MENU], const char* titulo, const char* msj){
     return toupper(op);
 }
 
-int recibirYMostrarRanking(SOCKET srv)
-{
-    uint32_t n_net;
-    if (!recv_all(srv, &n_net, sizeof n_net)) return 0;
-    int n = (int)ntohl(n_net);
-
-    if (n <= 0) {
-        printf("\n=== RANKING (vacío) ===\n");
-        return 1;
-    }
-
-    int bytes = n * TamRanking;
-    char *buf = (char*)malloc(bytes);
-    if (!buf) return 0;
-
-    if (!recv_all(srv, buf, bytes)) { free(buf); return 0; }
-
-    printf("\n\t=== RANKING (TOP %d) ===\n\n", n);
-    for (int i = 0; i < n; ++i) {
-        int off = i * TamRanking;
-
-        uint32_t id_n, pts_n;
-        memcpy(&id_n,  buf + off, 4); off += 4;
-        memcpy(&pts_n, buf + off, 4); off += 4;
-
-        tRanking r;
-        r.idJugador   = (int)ntohl(id_n);
-        r.totalPuntos = (int)ntohl(pts_n);
-
-        memcpy(r.nombre, buf + off, LARGO_NOMBRE_USUARIO);
-        r.nombre[LARGO_NOMBRE_USUARIO - 1] = '\0';
-
-        printf("%2d) %-20s  ID:%4d  Puntos:%6d\n",
-               i+1, r.nombre, r.idJugador, r.totalPuntos);
-    }
-
-    free(buf);
-    return 1;
-}
-
-int recv_all(SOCKET s, void *buf, int len)
-{
-    char *p = (char*)buf;
-    int recvd = 0;
-    while (recvd < len) {
-        int n = recv(s, p + recvd, len - recvd, 0);
-        if (n <= 0) return 0;   // error o desconexión
-        recvd += n;
-    }
-    return 1;
-}
-
 void normalizacion(char *cad) {
     char *src = cad;
     char temp[60];  // buffer temporal seguro

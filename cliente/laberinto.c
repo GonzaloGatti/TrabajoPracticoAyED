@@ -97,7 +97,18 @@ int laberinto(tPartidaCli *datos)
         {
             printf("\t");
             for(int j=0;j<cols;j++)
-                printf("%c ", lab[i][j]);
+            {
+                if(lab[i][j] == 'J')
+                    printf("\x1b[32m%c \x1b[0m", lab[i][j]);
+                else if(lab[i][j] == 'V')
+                    printf("\x1b[95m%c \x1b[0m", lab[i][j]);
+                else if(lab[i][j] == 'F')
+                    printf("\x1b[31m%c \x1b[0m", lab[i][j]);
+                else if(lab[i][j] == 'P')
+                    printf("\x1b[36m%c \x1b[0m", lab[i][j]);
+                else
+                    printf("%c ", lab[i][j]);
+            }
             printf("\n");
         }
         // =============
@@ -323,7 +334,11 @@ int laberinto(tPartidaCli *datos)
 
     // SI NO TENEMOS MAS VIDAS PERDEMOS
     if(!vidasInicio)
+    {
+        datos->cantidadMovimientos = contadorMovs;
+        datos->cantidadPuntos = 0;
         mostrarGameOver();
+    }
     // =============
 
     // LIBERAMOS EL LABERINTO
