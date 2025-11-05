@@ -1,6 +1,5 @@
 #include "cola.h"
 
-// ----------- Primitivas --------------
 void crearCola(tCola *cola){
     cola->pri = NULL;
     cola->ult = NULL;
