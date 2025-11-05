@@ -29,10 +29,10 @@ void run_server()
 
     crearArbol(&arbol);
 
-    // Decidir de d髇de levantar el 醨bol binario de busqueda balanceado
+    // Decidir de d贸nde levantar el 谩rbol binario de busqueda balanceado
     if (existeArchivo(ARCH_INDICE))
     {
-        // Ya tengo 韓dice ordenado, lo levanto balanceado
+        // Ya tengo 铆ndice ordenado, lo levanto balanceado
         if (cargarArbolBalanceadoDeArchIndice(&arbol, ARCH_INDICE, sizeof(tIndice)) != EXITO)
         {
             printf("No se pudo cargar el arbol desde el indice. Regenerando...");
@@ -44,12 +44,12 @@ void run_server()
 
     } else
     {
-        // No hay 韓dice, lo genero desde el archivo desordenado
+        // No hay 铆ndice, lo genero desde el archivo desordenado
         if (cargarArbolDeBinDesord(&arbol, ARCH_DATOS, sizeof(tJugador), cmpIndicePorId, extraerJugadorAIndice) != EXITO)
             printf("Archivo 'jugadores.dat' vacio o inexistente, se inicializa estructura vacia\n");
 
 
-        // y lo bajo ordenado para la pr髕ima ejecuci髇
+        // y lo bajo ordenado para la pr贸xima ejecuci贸n
         crearArchBinIndiceDeArbol(&arbol, ARCH_INDICE);
 
         // Cargamos el arbol binario de busqueda balanceado
@@ -129,7 +129,7 @@ void run_server()
 
         } else if (bytes_received == 0)
         {
-            // El cliente ha cerrado la conexi髇 de forma ordenada
+            // El cliente ha cerrado la conexi贸n de forma ordenada
             printf("Cliente desconectado (recv == 0). Saliendo del bucle.\n");
             break;
 
@@ -206,7 +206,7 @@ void run_server()
     WSACleanup();
 }
 
-// Implementaci髇 de funciones p鷅licas
+// Implementaci贸n de funciones p煤blicas
 int init_winsock()
 {
     WSADATA wsa;
@@ -238,34 +238,10 @@ SOCKET create_server_socket()
     return s;
 }
 
-int cmpIndicePorId(void *e1, void *e2) {
-    tIndice *i1 = (tIndice *)e1;
-    tIndice *i2 = (tIndice *)e2;
-
-    if (i1->idJugador > i2->idJugador) return 1;
-    if (i1->idJugador < i2->idJugador) return -1;
-    return 0;
-}
-
-void extraerJugadorAIndice(void *registroCrudo, void *indiceParam){
-    tJugador *registro = (tJugador *)registroCrudo;
-    tIndice *indice = (tIndice *)indiceParam;
-
-    strcpy(indice->nombreJugador, registro->nombre);
-    indice->idJugador = registro->idJugador;
-}
-
 int existeArchivo(const char *nombre)
 {
     struct stat st;
     return stat(nombre, &st) == 0;
-}
-
-int cmpUsuarios(void *elemento1, void *elemento2){
-    tIndice *indiceBuscado = (tIndice *)elemento1;
-    tIndice *indiceArbol = (tIndice *)elemento2;
-
-    return strcmp(indiceArbol->nombreJugador, indiceBuscado->nombreJugador);
 }
 
 int insercionArchivoDesYArbolBalanceado(tArbol *arbol, tPartidaSrv *partida, char *nombreArchDesordenado, char *nombreArchivoIndice, int *proxIdMem){
@@ -309,64 +285,6 @@ int insercionArchivoDesYArbolBalanceado(tArbol *arbol, tPartidaSrv *partida, cha
     return EXITO;
 }
 
-int obtenerProximoId(const char *nombreArchivo, int *proximoId)
-{
-    FILE *archivo;
-    tIndice ultimo;
-
-    archivo = fopen(nombreArchivo, "rb");
-    if (!archivo) {
-        // No existe todav韆 el 韓dice, primer id
-        *proximoId = 1;
-        return EXITO;
-    }
-
-    // Ir al 鷏timo registro
-    if (fseek(archivo, -(long)sizeof(tIndice), SEEK_END) != 0) {
-        fclose(archivo);
-        *proximoId = 1;
-        return EXITO;
-    }
-
-    if (fread(&ultimo, sizeof(tIndice), 1, archivo) != 1) {
-        fclose(archivo);
-        *proximoId = 1;
-        return EXITO;
-    }
-
-    fclose(archivo);
-    *proximoId = ultimo.idJugador + 1;
-
-    return EXITO;
-}
-
-int guardarPartidaArchivo(char *nombreArchivo, tPartidaSrv *partida)
-{
-    FILE *archivoPartidas;
-
-    if(!(archivoPartidas = fopen(nombreArchivo, "ab")))
-    {
-        printf("Se produjo un error al abrir el archivo de partidas");
-        return ERROR_ARCHIVO;
-    }
-
-    if(fwrite(partida, sizeof(*partida), 1, archivoPartidas) != 1)
-    {
-        printf("Error al guardar partida");
-        fclose(archivoPartidas);
-        return ERROR_ARCHIVO;
-    }
-
-    if (fflush(archivoPartidas) != 0) {
-        printf("Error al guardar partida");
-        fclose(archivoPartidas);
-        return ERROR_ARCHIVO;
-    }
-
-    fclose(archivoPartidas);
-
-    return EXITO;
-}
 
 int enviarRanking(SOCKET cli, tLista *lista)
 {
@@ -418,92 +336,3 @@ int send_all(SOCKET s, const void *buf, int len) {
     return EXITO;
 }
 
-int modificarCantPartidasJugador(char *nombreArchivo, const tIndice indiceJugador, tPartidaSrv *payloadSrv){
-    FILE *archivo;
-    tJugador jugador;
-    long pos = (long)indiceJugador.posicion;
-    long offset = pos * (long)sizeof(tJugador);
-
-    if(!(archivo = fopen(nombreArchivo, "r+b")))
-        return ERROR_ARCHIVO;
-
-    if (fseek(archivo, offset, SEEK_SET) != 0)
-    {
-        fclose(archivo);
-        return ERROR_ARCHIVO;
-    }
-
-    if (fread(&jugador, sizeof(jugador), 1, archivo) != 1)
-    {
-        fclose(archivo);
-        return ERROR_ARCHIVO;
-    }
-
-    jugador.cantidadPartidas++;
-    payloadSrv->cantidadPartidas = jugador.cantidadPartidas;
-
-    if (fseek(archivo, offset, SEEK_SET) != 0)
-    {
-        fclose(archivo);
-        return ERROR_ARCHIVO;
-    }
-
-    if (fwrite(&jugador, sizeof(jugador), 1, archivo) != 1)
-    {
-        fclose(archivo);
-        return ERROR_ARCHIVO;
-    }
-
-    fclose(archivo);
-
-    return EXITO;
-}
-
-int crearRanking(tLista *lista, char *nombreArchivo)
-{
-    FILE *archivo;
-    tRanking ranking;
-    tPartidaSrv partida;
-    int res;
-
-    if(!(archivo = fopen(nombreArchivo, "rb")))
-        return ERROR_ARCHIVO;
-
-    while(fread(&partida, sizeof(partida), 1, archivo) == 1)
-    {
-        ranking.idJugador = partida.idJugador;
-        strcpy(ranking.nombre, partida.nombre);
-        ranking.totalPuntos = partida.cantidadPuntos;
-
-        if((res =insertarOrdenadoOAcumularLista(lista, &ranking, sizeof(ranking), cmpId, acumularPuntos)) != EXITO)
-        {
-            fclose(archivo);
-            return res;
-        }
-    }
-
-    fclose(archivo);
-
-    return EXITO;
-}
-
-int cmpId(void *elemento1, void *elemento2)
-{
-    tRanking *ranking1 = (tRanking *)elemento1, *ranking2 = (tRanking *)elemento2;
-
-    return ranking1->idJugador - ranking2->idJugador;
-}
-
-int cmpPuntos(void *elemento1, void *elemento2)
-{
-    tRanking *ranking1 = (tRanking *)elemento1, *ranking2 = (tRanking *)elemento2;
-
-    return ranking1->totalPuntos - ranking2->totalPuntos;
-}
-
-void acumularPuntos(void *elemento1, void *elemento2)
-{
-    tRanking *ranking1 = (tRanking *)elemento1, *ranking2 = (tRanking *)elemento2;
-
-    ranking1->totalPuntos += ranking2->totalPuntos;
-}
