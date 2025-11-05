@@ -10,7 +10,6 @@ void menuJuego();
 char menu(const char[][LARGO_MENU], const char*);
 char opcion(const char[][LARGO_MENU], const char*, const char*);
 
-
 void normalizacion(char *);
 
 #endif // MENU_H_INCLUDED

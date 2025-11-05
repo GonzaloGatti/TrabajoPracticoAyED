@@ -58,7 +58,7 @@ int recibirYMostrarRanking(SOCKET srv)
         return 1;
     }
 
-    int bytes = n * TamRanking;
+    int bytes = n * TAM_RANKING;
     char *buf = (char*)malloc(bytes);
     if (!buf) return 0;
 
@@ -66,7 +66,7 @@ int recibirYMostrarRanking(SOCKET srv)
 
     printf("\n\t=== RANKING (TOP %d) ===\n\n", n);
     for (int i = 0; i < n; ++i) {
-        int off = i * TamRanking;
+        int off = i * TAM_RANKING;
 
         uint32_t id_n, pts_n;
         memcpy(&id_n,  buf + off, 4); off += 4;
@@ -76,8 +76,8 @@ int recibirYMostrarRanking(SOCKET srv)
         r.idJugador   = (int)ntohl(id_n);
         r.totalPuntos = (int)ntohl(pts_n);
 
-        memcpy(r.nombre, buf + off, LARGO_NOMBRE_USUARIO);
-        r.nombre[LARGO_NOMBRE_USUARIO - 1] = '\0';
+        memcpy(r.nombre, buf + off, TAM_NOMBRE);
+        r.nombre[TAM_NOMBRE - 1] = '\0';
 
         if(colorPrimero)
         {

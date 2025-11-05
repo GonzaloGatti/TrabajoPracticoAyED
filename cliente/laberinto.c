@@ -134,12 +134,6 @@ int laberinto(tPartidaCli *datos)
 
             datos->cantidadMovimientos = contadorMovs;
             datos->cantidadPuntos = puntos;
-            /*
-            printf("\nHistorial de movimientos de los fantasmas:\n");
-            while(sacarDeCola(&colaMovsFantasmas, &m, sizeof(m)) ==  EXITO) {
-                printf(" %d%c -", m.idFantasma, m.mov);
-            }
-            */
 
             printf("\n\n\n");
             system("pause");
@@ -338,6 +332,21 @@ int laberinto(tPartidaCli *datos)
         datos->cantidadMovimientos = contadorMovs;
         datos->cantidadPuntos = 0;
         mostrarGameOver();
+
+        printf("\n\nHistorial de movimientos: ");
+        while(sacarDeCola(&colaMovHistorial, &movSacado, sizeof(movSacado)) ==  EXITO)
+        {
+            contadorMovs++;
+            printf("%c", movSacado);
+
+            if(colaVacia(&colaMovHistorial) != COLA_VACIA)
+                printf("-");
+        }
+
+        printf("\nTotal de movimientos: %d", contadorMovs);
+        printf("\n\n\n");
+
+        system("pause");
     }
     // =============
 
@@ -365,7 +374,6 @@ int leerDatosDeArchivo(int *filas, int *cols, int *vidasInicio, int *cantFantasm
 
     return EXITO;
 }
-
 
 char ** creacionYPosicionamientoLab(Pos *E, Pos *S, Pos *J, int filas, int cols)
 {
@@ -498,7 +506,5 @@ void mostrarGameOver()
     printf("\t#      #   #   ###    ###  \n");
     printf("\t#      #   #      #      # \n");
     printf("\t#####   ###   ####   ####  \n\n\n");
-
-    system("pause");
 }
 

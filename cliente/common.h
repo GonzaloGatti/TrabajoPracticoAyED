@@ -13,26 +13,25 @@
 #define ESPACIO_DISPONIBLE 5
 
 #define LARGO_MENU 30
-#define LARGO_NOMBRE_USUARIO 20
+#define TAM_NOMBRE 20
+#define TAM_RANKING (4 + 4 + TAM_NOMBRE)
 
 #define SERVER_IP "127.0.0.1"
 #define PORT 12345
 #define BUFFER_SIZE 1024
 
-#define TamRanking (4 + 4 + LARGO_NOMBRE_USUARIO)
-
 #define MIN(a, b) ((a)<(b)?(a):(b))
 
 typedef struct{
     char opcion;
-    char nombre[LARGO_NOMBRE_USUARIO];
+    char nombre[TAM_NOMBRE];
     int cantidadPuntos;
     int cantidadMovimientos;
 } tPartidaCli;
 
 typedef struct{
     int idJugador;
-    char nombre[LARGO_NOMBRE_USUARIO];
+    char nombre[TAM_NOMBRE];
     int cantidadPuntos;
     int cantidadMovimientos;
     int cantidadPartidas;
@@ -40,7 +39,7 @@ typedef struct{
 
 typedef struct{
     int idJugador;
-    char nombre[LARGO_NOMBRE_USUARIO];
+    char nombre[TAM_NOMBRE];
     int totalPuntos;
 } tRanking;
 
