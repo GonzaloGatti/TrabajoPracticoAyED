@@ -2,7 +2,7 @@
 Repositorio del trabajo practico "Laberintos y Fantasmas", Algoritmos y estructuras de datos
 
 ## Pasos para jugar a "Laberintos y Fantasmas":
-1. Una vez clonado el proyecto en su computadora local, debe compilar ambos proyectos incluyendo la biblioteca ws2_32 para poder utilizar los sockets:
+1. Una vez clonado el proyecto en su computadora local, debe compilar ambos proyectos incluyendo la biblioteca ws2_32 para poder utilizar los sockets:  
   gcc src/servidor/*.c -o servidor.exe -lws2_32  
   gcc src/cliente/*.c  -o cliente.exe  -lws2_32  
 3. Ejecutar proyecto servidor. De esta manera, el servidor estara "escuchando" en el puerto asignado (12345) una conexion.
