@@ -1,11 +1,9 @@
 #ifndef SERVIDOR_LIB_H_INCLUDED
 #define SERVIDOR_LIB_H_INCLUDED
 
-#include "common.h"
+#include "partida.h"
 
 #include "cola.h"
-#include "arbol.h"
-#include "lista.h"
 
 #include <ctype.h>
 #include <time.h>

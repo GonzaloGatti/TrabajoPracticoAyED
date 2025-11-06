@@ -2,17 +2,8 @@
 #define PARTIDA_H_INCLUDED
 
 #include "common.h"
-
-#include "cola.h"
 #include "arbol.h"
 #include "lista.h"
-
-#include <ctype.h>
-#include <time.h>
-#include <winsock2.h>
-#include <sys/stat.h>
-#include <stdint.h>
-
 
 int guardarPartidaArchivo(char *nombreArchivo, tPartidaSrv *partida);
 int modificarCantPartidasJugador(char *nombreArchivo, const tIndice indiceJugador, tPartidaSrv *payloadSrv);
