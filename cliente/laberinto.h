@@ -5,6 +5,8 @@
 
 #include "cola.h"
 
+#define ARCH_TXT "cliente/config.txt"
+
 // ----------- Estructuras --------------
 typedef struct {
     int i, j;

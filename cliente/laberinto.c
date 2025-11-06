@@ -363,7 +363,7 @@ int leerDatosDeArchivo(int *filas, int *cols, int *vidasInicio, int *cantFantasm
 {
     FILE *f;
 
-    f = fopen("config.txt", "rt");
+    f = fopen(ARCH_TXT, "rt");
     if(!f)
         return ERROR_ARCHIVO;
 
