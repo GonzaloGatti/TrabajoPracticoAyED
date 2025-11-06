@@ -6,6 +6,6 @@ Repositorio del trabajo practico "Laberintos y Fantasmas", Algoritmos y estructu
   gcc {carpeta donde se encuentre hecho el clone}/servidor/*.c -o servidor.exe -lws2_32  
   gcc {carpeta donde se encuentre hecho el clone}/cliente/*.c  -o cliente.exe  -lws2_32
 3. Una vez compilados ambos proyectos, veremos sus respectivos .exe:  
-  Ejecutar proyecto servidor. De esta manera, el servidor estara "escuchando" en el puerto asignado (12345) una conexion.  
-  Ejecutar proyecto cliente. El mismo se conectara al servidor mediante el mismo puerto (12345), de manera de poder comunicarse y llevar a cabo el servicio de base de datos.
+  Ejecutar .exe servidor. De esta manera, el servidor estara "escuchando" en el puerto asignado (12345) una conexion.  
+  Ejecutar .exe cliente. El mismo se conectara al servidor mediante el mismo puerto (12345), de manera de poder comunicarse y llevar a cabo el servicio de base de datos.
 4. Jugar. Mientras el servidor este activo, todas las partidas jugadas se estar guardando en el mismo, pudiendo obtener una respuesta del servidor, por ejemplo, al pedir el ranking de jugadores.
